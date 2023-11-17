@@ -30,7 +30,16 @@ while (!exitProgram)
             inventory.ViewAllProducts();
             break;
         case "3":
-            Console.WriteLine("Edit a product");
+            List<Product> products = inventory.GetAllProducts();
+            if(products.Count > 0)
+            {
+                Console.WriteLine("Enter the product name to update:");
+                string editProductName = Console.ReadLine();
+                inventory.EditProduct(editProductName);
+            } else
+            {
+                Console.WriteLine("There are no products to update!");
+            }
             break;
         case "4":
             Console.WriteLine("Delete a product");

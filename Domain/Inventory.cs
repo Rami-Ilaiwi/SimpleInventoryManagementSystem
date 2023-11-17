@@ -28,5 +28,32 @@ namespace SimpleInventoryManagementSystem.Domain
             }
             else { Console.WriteLine("There are no products to show!"); }
         }
+
+        public List<Product> GetAllProducts() { return products; }
+
+        public void EditProduct(string name)
+        {
+            Product product = products.Find(product => product.Name == name);
+
+            if (product != null)
+            {
+                Console.WriteLine("Enter new product name:");
+                string productName = Console.ReadLine();
+                Console.WriteLine("Enter new product price:");
+                float productPrice = float.Parse(Console.ReadLine());
+                Console.WriteLine("Enter new product quantity:");
+                int productQuantity = int.Parse(Console.ReadLine());
+
+                product.Name = productName;
+                product.Price = productPrice;
+                product.Quantity = productQuantity;
+                Console.WriteLine("Product has been updated successfully!");
+
+            }
+            else
+            {
+                Console.WriteLine("Product not found!");
+            }
+        }
     }
 }
