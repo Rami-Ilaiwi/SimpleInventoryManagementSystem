@@ -10,6 +10,11 @@ namespace SimpleInventoryManagementSystem.Domain
     {
         private List<Product> products = new List<Product>();
 
+        private Product FindProductByName(string name)
+        {
+            return products.Find(product => product.Name == name);
+        }
+
         public void AddProduct(string name, float price, int quantity)
         {
             Product product = new Product(name, price, quantity);
@@ -18,7 +23,7 @@ namespace SimpleInventoryManagementSystem.Domain
 
         public void ViewAllProducts()
         {
-            if (products.Count > 0)
+            if (CheckInventoryIsEmpty())
             {
                 Console.WriteLine("Products:");
                 foreach (var product in products)
@@ -29,11 +34,11 @@ namespace SimpleInventoryManagementSystem.Domain
             else { Console.WriteLine("There are no products to show!"); }
         }
 
-        public List<Product> GetAllProducts() { return products; }
+        public bool CheckInventoryIsEmpty() { return products.Count > 0; }
 
         public void EditProduct(string name)
         {
-            Product product = products.Find(product => product.Name == name);
+            Product product = FindProductByName(name);
 
             if (product != null)
             {
@@ -49,6 +54,21 @@ namespace SimpleInventoryManagementSystem.Domain
                 product.Quantity = productQuantity;
                 Console.WriteLine("Product has been updated successfully!");
 
+            }
+            else
+            {
+                Console.WriteLine("Product not found!");
+            }
+        }
+
+        public void DeleteProduct(string name)
+        {
+            Product product = FindProductByName(name);
+
+            if (product != null)
+            {
+                products.Remove(product);
+                Console.WriteLine("Product has been removed successfully!");
             }
             else
             {
