@@ -64,7 +64,8 @@ while (!exitProgram)
             }
             break;
         case "6":
-            Console.WriteLine("Exit");
+            exitProgram = true;
+            Console.WriteLine("Good bye!");
             break;
         default: Console.WriteLine("Wrong selection! Please enter a valid selection");
             break;
