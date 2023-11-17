@@ -28,7 +28,7 @@ namespace SimpleInventoryManagementSystem.Domain
                 Console.WriteLine("Products:");
                 foreach (var product in products)
                 {
-                    Console.WriteLine($"Product name: {product.Name} -- Product price: {product.Price} -- Product quantity: {product.Quantity}");
+                    LogProduct(product);
                 }
             }
             else { Console.WriteLine("There are no products to show!"); }
@@ -74,6 +74,24 @@ namespace SimpleInventoryManagementSystem.Domain
             {
                 Console.WriteLine("Product not found!");
             }
+        }
+
+        public void SearchProduct(string name)
+        {
+            Product product = FindProductByName(name);
+            if (product != null)
+            {
+                LogProduct(product);
+            }
+            else
+            {
+                Console.WriteLine("Product not found!");
+            }
+        }
+
+        private void LogProduct(Product product)
+        {
+            Console.WriteLine($"Product name: {product.Name} -- Product price: {product.Price} -- Product quantity: {product.Quantity}");
         }
     }
 }
