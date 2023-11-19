@@ -44,18 +44,28 @@ while (!exitProgram)
             if(inventory.CheckInventoryIsEmpty())
             {
                 Console.WriteLine("Enter the product name to delete:");
-                string editProductName = Console.ReadLine();
-                inventory.DeleteProduct(editProductName);
+                string deleteProductName = Console.ReadLine();
+                inventory.DeleteProduct(deleteProductName);
             } else
             {
                 Console.WriteLine("There are no products to update!");
             }
             break;
         case "5":
-            Console.WriteLine("Search for a product");
+            if (inventory.CheckInventoryIsEmpty())
+            {
+                Console.WriteLine("Enter the product name to search for:");
+                string searchProductName = Console.ReadLine();
+                inventory.SearchProduct(searchProductName);
+            }
+            else
+            {
+                Console.WriteLine("There are no products to search for!");
+            }
             break;
         case "6":
-            Console.WriteLine("Exit");
+            exitProgram = true;
+            Console.WriteLine("Good bye!");
             break;
         default: Console.WriteLine("Wrong selection! Please enter a valid selection");
             break;
