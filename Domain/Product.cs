@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleInventoryManagementSystem.Domain
+﻿namespace SimpleInventoryManagementSystem.Domain
 {
     public class Product
     {
@@ -17,5 +11,10 @@ namespace SimpleInventoryManagementSystem.Domain
         public string Name { get; set; }
         public float Price { get; set; }
         public int Quantity { get; set; }
+
+        public override string? ToString()
+        {
+            return $"Product name: {this.Name} -- Product price: {this.Price} -- Product quantity: {this.Quantity}";
+        }
     }
 }

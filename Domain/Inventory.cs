@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleInventoryManagementSystem.Domain
+﻿namespace SimpleInventoryManagementSystem.Domain
 {
     public class Inventory
     {
@@ -12,13 +6,33 @@ namespace SimpleInventoryManagementSystem.Domain
 
         private Product FindProductByName(string name)
         {
-            return products.Find(product => product.Name == name);
+            if (name == null)
+            {
+                return null;
+            }
+
+            return products?.FirstOrDefault(product => String.Equals(product.Name, name, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public void AddProduct(string name, float price, int quantity)
         {
-            Product product = new Product(name, price, quantity);
-            products.Add(product);
+            if (FindProductByName(name) != null)
+            {
+                Console.WriteLine("Product already exists!");
+            }
+            else if (price <= 0)
+            {
+                Console.WriteLine("Price must be greater than zero.");
+            }
+            else if (quantity < 0)
+            {
+                Console.WriteLine("Quantity cannot be negative.");
+            }
+            else
+            {
+                Product product = new Product(name, price, quantity);
+                products.Add(product);
+            }
         }
 
         public void ViewAllProducts()
@@ -28,30 +42,32 @@ namespace SimpleInventoryManagementSystem.Domain
                 Console.WriteLine("Products:");
                 foreach (var product in products)
                 {
-                    LogProduct(product);
+                    Console.WriteLine(product);
                 }
             }
             else { Console.WriteLine("There are no products to show!"); }
         }
 
-        public bool CheckInventoryIsEmpty() { return products.Count > 0; }
+        public bool CheckInventoryIsEmpty() { return products.Any(); }
 
-        public void EditProduct(string name)
+        public void EditProduct(string oldName, string newName, float price, int quantity)
         {
-            Product product = FindProductByName(name);
-
+            Product product = FindProductByName(oldName);
+            Console.WriteLine(product);
             if (product != null)
             {
-                Console.WriteLine("Enter new product name:");
-                string productName = Console.ReadLine();
-                Console.WriteLine("Enter new product price:");
-                float productPrice = float.Parse(Console.ReadLine());
-                Console.WriteLine("Enter new product quantity:");
-                int productQuantity = int.Parse(Console.ReadLine());
-
-                product.Name = productName;
-                product.Price = productPrice;
-                product.Quantity = productQuantity;
+                if (!String.IsNullOrEmpty(newName))
+                {
+                    product.Name = newName;
+                }
+                if (price > 0)
+                {
+                    product.Price = price;
+                }
+                if (quantity >= 0)
+                {
+                    product.Quantity = quantity;
+                }
                 Console.WriteLine("Product has been updated successfully!");
 
             }
@@ -81,17 +97,12 @@ namespace SimpleInventoryManagementSystem.Domain
             Product product = FindProductByName(name);
             if (product != null)
             {
-                LogProduct(product);
+                Console.WriteLine(product);
             }
             else
             {
                 Console.WriteLine("Product not found!");
             }
-        }
-
-        private void LogProduct(Product product)
-        {
-            Console.WriteLine($"Product name: {product.Name} -- Product price: {product.Price} -- Product quantity: {product.Quantity}");
         }
     }
 }

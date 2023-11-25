@@ -1,7 +1,8 @@
-﻿using SimpleInventoryManagementSystem.Domain;
+﻿using SimpleInventoryManagementSystem;
+using SimpleInventoryManagementSystem.Domain;
 
-Inventory inventory = new Inventory();
-bool exitProgram = false;
+var inventory = new Inventory();
+var exitProgram = false;
 while (!exitProgram)
 {
     Console.WriteLine("1: Add a product");
@@ -18,56 +19,26 @@ while (!exitProgram)
     switch (selection)
     {
         case "1":
-            Console.WriteLine("Enter product name: ");
-            string productName = Console.ReadLine();
-            Console.WriteLine("Enter product price");
-            float productPrice = float.Parse(Console.ReadLine());
-            Console.WriteLine("Enter product quantity");
-            int productQuantity = int.Parse(Console.ReadLine());
-            inventory.AddProduct(productName, productPrice, productQuantity);
+            Utilities.AddProduct(inventory);
             break;
         case "2":
-            inventory.ViewAllProducts();
+            Utilities.ViewAllProducts(inventory);
             break;
         case "3":
-            if(inventory.CheckInventoryIsEmpty())
-            {
-                Console.WriteLine("Enter the product name to update:");
-                string editProductName = Console.ReadLine();
-                inventory.EditProduct(editProductName);
-            } else
-            {
-                Console.WriteLine("There are no products to update!");
-            }
+            Utilities.EditProduct(inventory);
             break;
         case "4":
-            if(inventory.CheckInventoryIsEmpty())
-            {
-                Console.WriteLine("Enter the product name to delete:");
-                string deleteProductName = Console.ReadLine();
-                inventory.DeleteProduct(deleteProductName);
-            } else
-            {
-                Console.WriteLine("There are no products to update!");
-            }
+            Utilities.DeleteProduct(inventory);
             break;
         case "5":
-            if (inventory.CheckInventoryIsEmpty())
-            {
-                Console.WriteLine("Enter the product name to search for:");
-                string searchProductName = Console.ReadLine();
-                inventory.SearchProduct(searchProductName);
-            }
-            else
-            {
-                Console.WriteLine("There are no products to search for!");
-            }
+            Utilities.SearchProduct(inventory);
             break;
         case "6":
             exitProgram = true;
             Console.WriteLine("Good bye!");
             break;
-        default: Console.WriteLine("Wrong selection! Please enter a valid selection");
+        default:
+            Console.WriteLine("Wrong selection! Please enter a valid selection");
             break;
     }
     Console.WriteLine();
